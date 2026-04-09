@@ -8,6 +8,7 @@ pt = "lib.test.evaluation.%sdataset"  # Useful abbreviations to reduce the clutt
 seg = "lib.train.dataset.%s"
 
 dataset_dict = dict(
+    cmotb=DatasetInfo(module=pt % "cmotb", class_name="CMOTBDataset", kwargs=dict()),
     otb=DatasetInfo(module=pt % "otb", class_name="OTBDataset", kwargs=dict()),
     nfs=DatasetInfo(module=pt % "nfs", class_name="NFSDataset", kwargs=dict()),
     uav=DatasetInfo(module=pt % "uav", class_name="UAVDataset", kwargs=dict()),

@@ -1,0 +1,13 @@
+DATA:
+  TRAIN:
+    DATASETS_NAME:
+    - CMOTB_train
+    DATASETS_RATIO:
+    - 1
+    SAMPLE_PER_EPOCH: 30000
+  VAL:
+    DATASETS_NAME:
+    - CMOTB_test
+    DATASETS_RATIO:
+    - 1
+    SAMPLE_PER_EPOCH: 5000

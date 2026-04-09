@@ -2,7 +2,7 @@ import os
 import torch
 from torch.utils.data.distributed import DistributedSampler
 # datasets related
-from lib.train.dataset import Lasot, Got10k, MSCOCOSeq, ImagenetVID, TrackingNet
+from lib.train.dataset import Lasot, CMOTB, Got10k, MSCOCOSeq, ImagenetVID, TrackingNet
 from lib.train.dataset import Lasot_lmdb, Got10k_lmdb, MSCOCOSeq_lmdb, ImagenetVID_lmdb, TrackingNet_lmdb
 from lib.train.data import sampler, opencv_loader, processing, LTRLoader
 import lib.train.data.transforms as tfm
@@ -29,7 +29,8 @@ def names2datasets(name_list: list, settings, image_loader):
     assert isinstance(name_list, list)
     datasets = []
     for name in name_list:
-        assert name in ["LASOT", "GOT10K_vottrain", "GOT10K_votval", "GOT10K_train_full", "GOT10K_official_val",
+        assert name in ["LASOT", "CMOTB", "CMOTB_train", "CMOTB_test",
+                        "GOT10K_vottrain", "GOT10K_votval", "GOT10K_train_full", "GOT10K_official_val",
                         "COCO17", "VID", "TRACKINGNET",
                         ]
         # Tracking Task
@@ -39,6 +40,12 @@ def names2datasets(name_list: list, settings, image_loader):
                 datasets.append(Lasot_lmdb(settings.env.lasot_lmdb_dir, split='train', image_loader=image_loader))
             else:
                 datasets.append(Lasot(settings.env.lasot_dir, split='train', image_loader=image_loader))
+        if name in ["CMOTB", "CMOTB_train", "CMOTB_test"]:
+            if settings.use_lmdb:
+                raise ValueError("CMOTB dataset does not support lmdb format in this repo.")
+            else:
+                split = 'test' if name == "CMOTB_test" else 'train'
+                datasets.append(CMOTB(settings.env.cmotb_dir, split=split, image_loader=image_loader))
         if name == "GOT10K_vottrain":
             if settings.use_lmdb:
                 print("Building got10k from lmdb")

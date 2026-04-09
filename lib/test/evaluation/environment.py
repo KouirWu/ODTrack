@@ -10,6 +10,7 @@ class EnvSettings:
         self.segmentation_path = '{}/segmentation_results/'.format(test_path)
         self.network_path = '{}/networks/'.format(test_path)
         self.result_plot_path = '{}/result_plots/'.format(test_path)
+        self.cmotb_path = ''
         self.otb_path = ''
         self.nfs_path = ''
         self.uav_path = ''
